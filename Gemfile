@@ -10,6 +10,8 @@ gem 'mutex_m'
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.6"
 
+gem 'bootstrap', '~> 5.3.3'
+
 gem 'faker'
 
 gem "responders"
@@ -82,3 +84,5 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
+
+gem "importmap-rails", "~> 2.1"
