@@ -4,7 +4,7 @@
 
       <%= form_with scope: :query, url: notes_path, method: :get,  data: { controller: 'auto-submit',  "turbo-action": "advance", "turbo-frame": "notes" } do |form| %>
         <div class="form-group">
-          <%= form.search_field :search, value: params.dig(:query, :search), class: "form-control", placeholder: 'search', data: { action: 'keyup->auto-submit#submit' } %>
+          <%= form.search_field :search, value: params.dig(:query, :search), class: "form-control", placeholder: 'search', data: { action: 'auto-submit#submit' } %>
         </div>
       <% end %>
 
