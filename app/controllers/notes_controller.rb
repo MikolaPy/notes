@@ -4,8 +4,8 @@ class NotesController < ApplicationController
   respond_to :html
 
   def index
-    @notes = Note.all
-    respond_with(@notes)
+    notes = Note.search(search)
+    @pagy, @notes = pagy(notes)
   end
 
   def show
@@ -43,5 +43,9 @@ class NotesController < ApplicationController
 
     def note_params
       params.require(:note).permit(:title, :body)
+    end
+
+    def search
+      params.dig(:query, :search)
     end
 end

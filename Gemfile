@@ -10,6 +10,10 @@ gem 'mutex_m'
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.6"
 
+gem 'search_cop'
+
+gem 'pagy'
+
 gem 'bootstrap', '~> 5.3.3'
 
 gem 'faker'
