@@ -1,12 +1,17 @@
-<div id="<%= dom_id note %>">
-  <p>
-    <strong>Title:</strong>
-    <%= note.title %>
-  </p>
-
-  <p>
-    <strong>Body:</strong>
-    <%= note.body %>
-  </p>
-
+<div id="<%= dom_id note %>" class="col-md-4">
+  <div class="card mb-4 box-shadow">
+    <div class="card-body">
+      <div class="card-title">
+        <%= note.title %>
+      </div>
+      <p class="card-text"> 
+        <%= note.body %>
+      </p>
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="btn-group">
+          <%= link_to "View", note_path(note), class: "btn btn-sm btn-outline-secondary" %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

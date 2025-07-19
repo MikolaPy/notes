@@ -1,3 +1,2 @@
-p 'hello word'
-p Note
-p Note.all
+
+100.times { Note.create(title: Faker::Lorem.question, body: Faker::Lorem.paragraph) }
