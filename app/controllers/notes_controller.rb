@@ -4,12 +4,12 @@ class NotesController < ApplicationController
   respond_to :html
 
   def index
-    notes = Note.search(search)
-    @pagy, @notes = pagy(notes)
+    search_notes = Note.search(search)
+    @pagy, @notes = pagy(search_notes)
   end
 
   def show
-    respond_with(@note)
+    @pagy, @comments = pagy(@note.comments, limit: 10)
   end
 
   def new

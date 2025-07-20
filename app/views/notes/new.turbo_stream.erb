@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="my-4">
+    <%= link_to "Notes", notes_path %>
+  </div>
+
+  <div class="my-4">
+    <h1><%= @note.title %></h1>
+  </div>
+
+  <p> <%= @note.body %> </p>
+
+  <div class="d-flex gap-2 my-4">
+    <%= link_to "Edit", edit_note_path(@note), class: "btn btn-sm btn-outline-secondary" %>
+    <%= button_to "delete", @note, :method => :delete, class: "btn btn-sm btn-outline-secondary"  %>
+  </div>
+</div>
+
+<div class="container my-5 py-5">
+  <h4 class="mb-4">Recent comments</h4>
+
+  <div id="comments" class="card text-body">
+    <% @comments.each do |comment| %>
+      <%= render comment %>
+      <hr class="my-0" />
+    <% end %>
+  </div>
+
+  <div id="pager" class="">
+    <% if @pagy.next %>
+      <%= link_to note_path(@note, page: @pagy.next),
+        class: "btn btn-ghost-primary mt-2 w-100 btn-loading",
+          data: {
+            turbo_stream: "",
+            controller: "autoclick"
+          } do %>
+        loading ...
+      <% end %>
+    <% end %>
+  </div>
+
+</div>
+
+

@@ -1,18 +1,26 @@
 <div class="container">
-
   <div class="my-4">
     <%= link_to "Notes", notes_path %>
   </div>
 
-  <div class="my-4">
-    <h1><%= @note.title %></h1>
-  </div>
+  <h1 class="my-4"><%= @note.title %></h1>
 
   <p> <%= @note.body %> </p>
 
   <div class="d-flex gap-2 my-4">
     <%= link_to "Edit", edit_note_path(@note), class: "btn btn-sm btn-outline-secondary" %>
-    <%= button_to "delete", @note, :method => :delete, class: "btn btn-sm btn-outline-secondary"  %>
+    <%= button_to "Delete", @note, :method => :delete, class: "btn btn-sm btn-outline-danger", data: { turbo_confirm: 'Are you sure you want to delete note ?' } %>
   </div>
-  
+
+  <%= link_to "Add comment", new_comment_path, class: "btn btn-primary mt-4" %>
+</div>
+
+<div class="container my-4">
+  <h4 class="mb-4">Recent comments</h4>
+
+  <div id="comments" class="card text-body">
+    <%= render partial: 'comments/comment', collection: @comments, as: :comment %>
+  </div>
+
+  <%= render partial: 'comments/pagy',  locals: {pagy: @pagy} %>
 </div>

@@ -4,4 +4,7 @@ class Note < ApplicationRecord
   search_scope :search do
     attributes :title, :body
   end
+
+  has_many :comments, dependent: :destroy
+
 end

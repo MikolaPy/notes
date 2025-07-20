@@ -1,0 +1,7 @@
+<%= turbo_stream.append "comments" do %>
+  <%= render partial: 'comments/comment', collection: @comments, as: :comment %>
+<% end %>
+
+<%= turbo_stream.replace "comments_pagy" do %>
+  <%= render partial: 'comments/pagy',  locals: {pagy: @pagy} %>
+<% end %>

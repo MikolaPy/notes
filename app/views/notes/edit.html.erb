@@ -1,14 +1,12 @@
 <div class="container">
-  <h1>Editing note</h1>
-
-  <br>
-
-  <div class="my-1">
+  <div class="my-4">
     <%= link_to "Show this note", @note %> |
     <%= link_to "Back to notes", notes_path %>
   </div>
 
-  <div class="row my-3">
+  <h1 class="my-4"> Editing note </h1>
+
+  <div class="row">
     <%= render "form", note: @note %>
   </div>
 </div>
