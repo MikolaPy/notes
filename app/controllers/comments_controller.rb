@@ -1,19 +1,15 @@
 class CommentsController < ApplicationController
-  before_action :set_comment, only: [:show, :edit, :update, :destroy]
+  before_action :set_note
+  before_action :set_comment, only: [:edit, :update, :destroy]
 
   respond_to :html
 
   def index
-    @comments = Comment.all
-    respond_with(@comments)
-  end
-
-  def show
-    respond_with(@comment)
+    @pagy, @comments = pagy(@note.comments, limit: 10)
   end
 
   def new
-    @comment = Comment.new
+    @comment = @note.comments.new
     respond_with(@comment)
   end
 
@@ -21,22 +17,27 @@ class CommentsController < ApplicationController
   end
 
   def create
-    @comment = Comment.new(comment_params)
+    @comment = @note.comments.new(comment_params)
     @comment.save
-    respond_with(@comment)
+    respond_with @comment, location: -> { note_path(@note) }
   end
 
   def update
     @comment.update(comment_params)
-    respond_with(@comment)
+    respond_with @comment, location: -> { note_path(@note) }
   end
 
   def destroy
     @comment.destroy
-    respond_with(@comment)
+    respond_with @comment, location: -> { note_path(@note) }
   end
 
   private
+
+    def set_note
+      @note = Note.find(params[:note_id])
+    end
+
     def set_comment
       @comment = Comment.find(params[:id])
     end

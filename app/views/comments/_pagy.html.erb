@@ -1,6 +1,6 @@
 <div id="comments_pagy" class="">
   <% if pagy.next %>
-    <%= link_to note_path(@note, page: pagy.next),
+    <%= link_to note_comments_path(@note, page: pagy.next),
         class: "btn btn-ghost-primary mt-2 w-100 btn-loading",
         data: {
           turbo_stream: "",
