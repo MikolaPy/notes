@@ -14,44 +14,30 @@ require 'rails_helper'
 
 RSpec.describe "/comments", type: :request do
   
-  # This should return the minimal set of attributes required to create a valid
-  # Comment. As you add validations to Comment, be sure to
-  # adjust the attributes here as well.
+
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    { name: Faker::Lorem.question, body: Faker::Lorem.paragraph }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    { name: nil, body: nil }
   }
 
-  describe "GET /index" do
-    it "renders a successful response" do
-      Comment.create! valid_attributes
-      get comments_url
-      expect(response).to be_successful
-    end
-  end
-
-  describe "GET /show" do
-    it "renders a successful response" do
-      comment = Comment.create! valid_attributes
-      get comment_url(comment)
-      expect(response).to be_successful
-    end
+  before(:context) do
+    @note = Note.create({ title: Faker::Lorem.question, body: Faker::Lorem.paragraph })
   end
 
   describe "GET /new" do
     it "renders a successful response" do
-      get new_comment_url
+      get new_note_comment_url(@note)
       expect(response).to be_successful
     end
   end
 
   describe "GET /edit" do
     it "renders a successful response" do
-      comment = Comment.create! valid_attributes
-      get edit_comment_url(comment)
+      comment = @note.comments.create! valid_attributes
+      get edit_note_comment_url(@note, comment)
       expect(response).to be_successful
     end
   end
@@ -60,25 +46,25 @@ RSpec.describe "/comments", type: :request do
     context "with valid parameters" do
       it "creates a new Comment" do
         expect {
-          post comments_url, params: { comment: valid_attributes }
-        }.to change(Comment, :count).by(1)
+          post note_comments_url(@note), params: { comment: valid_attributes }
+        }.to change(@note.comments, :count).by(1)
       end
 
       it "redirects to the created comment" do
-        post comments_url, params: { comment: valid_attributes }
-        expect(response).to redirect_to(comment_url(Comment.last))
+        post note_comments_url(@note), params: { comment: valid_attributes }
+        expect(response).to redirect_to(@note)
       end
     end
 
     context "with invalid parameters" do
       it "does not create a new Comment" do
         expect {
-          post comments_url, params: { comment: invalid_attributes }
-        }.to change(Comment, :count).by(0)
+          post note_comments_url(@note), params: { comment: invalid_attributes }
+        }.to change(@note.comments, :count).by(0)
       end
 
       it "renders a response with 422 status (i.e. to display the 'new' template)" do
-        post comments_url, params: { comment: invalid_attributes }
+        post note_comments_url(@note), params: { comment: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -87,28 +73,28 @@ RSpec.describe "/comments", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        { name: Faker::Lorem.question, body: Faker::Lorem.paragraph }
       }
 
       it "updates the requested comment" do
-        comment = Comment.create! valid_attributes
-        patch comment_url(comment), params: { comment: new_attributes }
+        comment = @note.comments.create! valid_attributes
+        patch note_comment_url(@note, comment), params: { comment: new_attributes }
         comment.reload
-        skip("Add assertions for updated state")
+        expect(response).to redirect_to(@note)
       end
 
       it "redirects to the comment" do
-        comment = Comment.create! valid_attributes
-        patch comment_url(comment), params: { comment: new_attributes }
+        comment = @note.comments.create! valid_attributes
+        patch note_comment_url(@note, comment), params: { comment: new_attributes }
         comment.reload
-        expect(response).to redirect_to(comment_url(comment))
+        expect(response).to redirect_to(@note)
       end
     end
 
     context "with invalid parameters" do
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
-        comment = Comment.create! valid_attributes
-        patch comment_url(comment), params: { comment: invalid_attributes }
+        comment = @note.comments.create! valid_attributes
+        patch note_comment_url(@note, comment), params: { comment: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -116,16 +102,16 @@ RSpec.describe "/comments", type: :request do
 
   describe "DELETE /destroy" do
     it "destroys the requested comment" do
-      comment = Comment.create! valid_attributes
+      comment = @note.comments.create! valid_attributes
       expect {
-        delete comment_url(comment)
-      }.to change(Comment, :count).by(-1)
+        delete note_comment_url(@note,comment)
+      }.to change(@note.comments, :count).by(-1)
     end
 
     it "redirects to the comments list" do
-      comment = Comment.create! valid_attributes
-      delete comment_url(comment)
-      expect(response).to redirect_to(comments_url)
+      comment = @note.comments.create! valid_attributes
+      delete note_comment_url(@note, comment)
+      expect(response).to redirect_to(@note)
     end
   end
 end
