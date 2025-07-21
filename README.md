@@ -13,6 +13,7 @@ Make database migrations
 ```
 $ rake db:migrate
 $ rails db:seed
+$ rails assets:precompile
 ```
 Run the test
 ```
